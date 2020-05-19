@@ -90,7 +90,7 @@ class CIFAR10(VisionDataset):
             train_data = []
             train_labels = []
 
-            for i in xrange(len(self.train_data)):
+            for i in range(len(self.train_data)):
                 if self.train_labels[i] in class_range:
                     train_data.append(self.train_data[i])
                     train_labels.append(self.train_labels[i])
