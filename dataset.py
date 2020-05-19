@@ -88,7 +88,7 @@ class CIFAR10(VisionDataset):
         data = []
         targets = []
         
-        for i in len(self):
+        for i in range(len(self)):
             if self.targets[i] in classes:
                 data.append(self.data[i])
                 targets.append(self.targets[i])
