@@ -46,7 +46,7 @@ class CIFAR10(VisionDataset):
         'md5': '5ff9c542aee3614f3951f8cda6e48888',
     }
 
-    def __init__(self, root, class_range=np.arange(10), train=True, transform=None, target_transform=None,
+    def __init__(self, root, classes=np.arange(10), train=True, transform=None, target_transform=None,
                  download=False):
 
         super(CIFAR10, self).__init__(root, transform=transform,
@@ -85,30 +85,17 @@ class CIFAR10(VisionDataset):
 
         self._load_meta()
         
-        # Select subset of classes
-        if self.train:
-            train_data = []
-            train_labels = []
-
-            for i in range(len(self.train_data)):
-                if self.train_labels[i] in class_range:
-                    train_data.append(self.train_data[i])
-                    train_labels.append(self.train_labels[i])
-
-            self.train_data = np.array(train_data)
-            self.train_labels = train_labels
-
-        else:
-            test_data = []
-            test_labels = []
-
-            for i in range(len(self.test_data)):
-                if self.test_labels[i] in class_range:
-                    test_data.append(self.test_data[i])
-                    test_labels.append(self.test_labels[i])
-
-            self.test_data = np.array(test_data)
-            self.test_labels = test_labels
+        data = []
+        targets = []
+        
+        for i in len(self):
+            if self.targets[i] in classes:
+                data.append(self.data[i])
+                targets.append(self.targets[i])
+        
+        self.data=np.array(data)
+        self.targets=targets
+        
 
     def _load_meta(self):
         path = os.path.join(self.root, self.base_folder, self.meta['filename'])
