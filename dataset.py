@@ -8,7 +8,7 @@ from .vision import VisionDataset
 from .utils import check_integrity, download_and_extract_archive
 
 
-[docs]class CIFAR10(VisionDataset):
+class CIFAR10(VisionDataset):
     """`CIFAR10 <https://www.cs.toronto.edu/~kriz/cifar.html>`_ Dataset.
 
     Args:
@@ -46,7 +46,7 @@ from .utils import check_integrity, download_and_extract_archive
         'md5': '5ff9c542aee3614f3951f8cda6e48888',
     }
 
-    def __init__(self, root, train=True, transform=None, target_transform=None,
+    def __init__(self, root, class_range=np.arange(10), train=True, transform=None, target_transform=None,
                  download=False):
 
         super(CIFAR10, self).__init__(root, transform=transform,
