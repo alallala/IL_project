@@ -84,6 +84,31 @@ class CIFAR10(VisionDataset):
         self.data = self.data.transpose((0, 2, 3, 1))  # convert to HWC
 
         self._load_meta()
+        
+        # Select subset of classes
+        if self.train:
+            train_data = []
+            train_labels = []
+
+            for i in xrange(len(self.train_data)):
+                if self.train_labels[i] in class_range:
+                    train_data.append(self.train_data[i])
+                    train_labels.append(self.train_labels[i])
+
+            self.train_data = np.array(train_data)
+            self.train_labels = train_labels
+
+        else:
+            test_data = []
+            test_labels = []
+
+            for i in xrange(len(self.test_data)):
+                if self.test_labels[i] in class_range:
+                    test_data.append(self.test_data[i])
+                    test_labels.append(self.test_labels[i])
+
+            self.test_data = np.array(test_data)
+            self.test_labels = test_labels
 
     def _load_meta(self):
         path = os.path.join(self.root, self.base_folder, self.meta['filename'])
@@ -95,7 +120,7 @@ class CIFAR10(VisionDataset):
             self.classes = data[self.meta['key']]
         self.class_to_idx = {_class: i for i, _class in enumerate(self.classes)}
 
-[docs]    def __getitem__(self, index):
+    def __getitem__(self, index):
         """
         Args:
             index (int): Index
@@ -140,8 +165,8 @@ class CIFAR10(VisionDataset):
         return "Split: {}".format("Train" if self.train is True else "Test")
 
 
-
-[docs]class CIFAR100(CIFAR10):
+    
+class CIFAR100(CIFAR10):
     """`CIFAR100 <https://www.cs.toronto.edu/~kriz/cifar.html>`_ Dataset.
 
     This is a subclass of the `CIFAR10` Dataset.
