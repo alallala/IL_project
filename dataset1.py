@@ -10,7 +10,7 @@ class _CIFAR10(CIFAR10):
                  transform=None,
                  target_transform=None,
                  download=False):
-        super(iCIFAR10, self).__init__(root,
+        super(_CIFAR10, self).__init__(root,
                                        train=train,
                                        transform=transform,
                                        target_transform=target_transform,
