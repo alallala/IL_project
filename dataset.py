@@ -4,15 +4,15 @@ import torch
 from PIL import Image
 
 class _CIFAR10(CIFAR10):
-  def __init__(self, root, range_classes, train=True, transform=None, target_transform=None, download=False):
-    super(_CIFAR100, self).__init__(root, train=train, transform=transform, target_transform=target_transform, download=download)
+  def __init__(self, root, class_range, train=True, transform=None, target_transform=None, download=False):
+    super(_CIFAR10, self).__init__(root, train=train, transform=transform, target_transform=target_transform, download=download)
     
     if self.train:
       train_data = []
       train_labels = []
       
       for i in range(len(self.train_data)):
-        if self.train_labels[i] in range_classes:
+        if self.train_labels[i] in class_range:
           train_data.append(self.train_data[i])
           train_labels.append(self.train_labels[i])
       
@@ -24,7 +24,7 @@ class _CIFAR10(CIFAR10):
       test_labels = []
       
       for i in range(len(self.test_data)):
-        if self.test_labels[i] in range_classes:
+        if self.test_labels[i] in class_range:
           test_data.append(self.test_data[i])
           test_labels.append(self.test_labels[i])
       
