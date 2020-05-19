@@ -60,7 +60,7 @@ class _CIFAR10(CIFAR10):
     else:
       return self.test_data[np.array(self.test_labels) == label]
     
- def append(self, images, labels):
+  def append(self, images, labels):
         """Append dataset with images and labels
         Args:
             images: Tensor of shape (N, C, H, W)
