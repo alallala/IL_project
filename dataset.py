@@ -4,7 +4,7 @@ import torch
 from PIL import Image
 
 class _CIFAR10(CIFAR10):
-  def __init__(self, root, class_range, train=True, transform=None, target_transform=None, download=False):
+  def __init__(self, root, class_range=np.arange(10), train=True, transform=None, target_transform=None, download=False):
     super(_CIFAR10, self).__init__(root, train=train, transform=transform, target_transform=target_transform, download=download)
     
     if self.train:
