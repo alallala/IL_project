@@ -5,7 +5,7 @@ import numpy as np
 import pickle
 
 from torchvision.datasets.vision import VisionDataset
-from torchvision.utils import check_integrity, download_and_extract_archive
+from torchvision.datasets.utils import check_integrity, download_and_extract_archive
 
 
 class CIFAR10(VisionDataset):
