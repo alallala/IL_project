@@ -107,10 +107,10 @@ def main():
 
   #define images transformation
   train_transform = transforms.Compose([transforms.ToTensor(),
-                                        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+                                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
   test_transform = transforms.Compose([transforms.ToTensor(),
-                                       transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+                                       transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
   #creo i dataset per ora prendo solo le prime 10 classi per testare, ho esteso la classe cifar 100 con attributo
   #classes che è una lista di labels, il dataset carica solo le foto con quelle labels
