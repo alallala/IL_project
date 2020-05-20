@@ -18,6 +18,7 @@ class iCarL(nn.Module):
   __init__(self, num_classes):
     super(iCarl,self).__init__()
     self.feature_extractor = resnet18()
+    self.feature_extractor.fc = 
     
     self.loss = nn.CrossEntropyLoss()
     self.dist_loss = nn.BCELoss()
