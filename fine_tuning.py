@@ -97,7 +97,7 @@ def test(net, test_dataloader):
     running_corrects += torch.sum(preds == labels.data).data.item()
 
   # Calculate Accuracy
-  accuracy = running_corrects / float(len(test_dataset))
+  accuracy = running_corrects / float(len(test_dataloader.dataset))
   print('Test Accuracy: {}'.format(accuracy))
 
 
