@@ -106,12 +106,10 @@ def test(net, test_dataloader):
 def main():
 
   #define images transformation
-  train_transform = transforms.Compose([#transforms.Resize(224),
-                                        transforms.ToTensor(),
+  train_transform = transforms.Compose([transforms.ToTensor(),
                                         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
-  test_transform = transforms.Compose([#transforms.Resize(224),
-                                       transforms.ToTensor(),
+  test_transform = transforms.Compose([transforms.ToTensor(),
                                        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
   #creo i dataset per ora prendo solo le prime 10 classi per testare, ho esteso la classe cifar 100 con attributo
@@ -126,7 +124,7 @@ def main():
 
   for i in range(int(100/ClASSES_BATCH)):
     #cambio il numero di classi di output
-    #net.fc = nn.Linear(64, 10+i*10)
+    net.fc = nn.Linear(64, 10+i*10)
 
     if i != 0:
 
