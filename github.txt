@@ -1,0 +1,33 @@
+istruzioni per utilizzo github:
+
+1 andare da terminale in una cartella vuota dove voler inserire il progetto
+  es: cd/Desktop/Project
+
+2 un volta dentro la cartella digitare i seguenti comandi(in sequenza)
+
+  -git init
+  -git add .
+  -git remote add origin https://github.com/21ric/IL_project.git
+  -git pull origin master (con questo comando scaricate la cartella del progetto)
+
+  A questo punto nella cartella si saranno scaricati tutti i file del progetto
+  apriteli e modificateli da editor tipo Spyder.
+
+  Una volta modificati, da terminale (dovete essere nella cartella del progetto)
+  fate questi comandi:
+
+  -git commit -am 'MESSAGGIO A VOSTRO PIACERE'
+
+  ** mettete sempre un messaggio, pure a caso
+  questo comando aggiunge le modifiche da fare al commit
+
+  -git push origin master
+  le modifiche vengono inviate su github e rese effettive
+
+
+  ogni volta che iniziate a lavorare (si presuppone che abbiate già inviato le modifiche
+  fatte fino a quel punto) vi consiglio di fare
+
+  -git pull origin maste
+
+  ovviamente sempre dentro la cartella corretta
