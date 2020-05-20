@@ -121,8 +121,8 @@ def main():
   classes_groups = np.array_split(range_classes, 10)
   
 
-  net = resnet18()
-  #net = resnet32()
+  #net = resnet18()
+  net = resnet32()
   
   for i in range(int(100/ClASSES_BATCH)):
     #cambio il numero di classi di output
