@@ -17,7 +17,7 @@ DEVICE = 'cuda'
 NUM_CLASSES = 10 
 BATCH_SIZE = 128
 ClASSES_BATCH =10
-STEPDOWN_EPOCHS = [49, 63]
+STEPDOWN_EPOCHS = [1, 49, 63]
 STEPDOWN_FACTOR = 5
 LR = 2
 MOMENTUM = 0.9       
@@ -46,7 +46,8 @@ def train(net, train_dataloader):
       
       #divide learning rate by 5 after 49 63 epochs
       if epoch in STEPDOWN_EPOCHS:
-        optimizer.param_groups['lr']=optimizer.param_groups['lr']/STEPDOWN_FACTOR
+        for param_group in optimizer.param_groups:
+          param_group['lr'] = param_group['lr']/STEPDOWN_FACTOR
 
       running_loss = 0.0
       running_corrects = 0
