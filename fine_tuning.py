@@ -38,7 +38,7 @@ def train(net, train_dataloader):
 
   for epoch in range(70): 
       if(epoch%5 == 0 ):
-        print('Epoch {}/{} LR={}'.format(epoch+1, 70, optimizer.param_groups['lr']))
+        print('Epoch {}/{} LR={}'.format(epoch+1, 70, float(optimizer.param_groups['lr'])))
         print('-' * 30)
       
       #divide learning rate by 5 after 49 63 epochs
