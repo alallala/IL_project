@@ -17,6 +17,8 @@ DEVICE = 'cuda'
 NUM_CLASSES = 10 
 BATCH_SIZE = 128
 ClASSES_BATCH =10
+STEPDOWN_EPOCHS = [49, 63]
+STEPDOWN_FACTOR = 5
 LR = 2
 MOMENTUM = 0.9       
 WEIGHT_DECAY = 0.00001  
@@ -31,36 +33,32 @@ def train(net, train_dataloader):
   #criterion = nn.BCELoss()#binary CrossEntropyLoss 
   parameters_to_optimize = net.parameters() # In this case we optimize over all the parameters of AlexNet
   optimizer = optim.SGD(parameters_to_optimize, lr=LR, weight_decay=WEIGHT_DECAY)
-  scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=STEP_SIZE, gamma=GAMMA)
-
+  scheduler = optim.lr_scheduler.StepLR(optimizer)#, step_size=STEP_SIZE, gamma=GAMMA)
   net.to(DEVICE)
 
-  i=0
-
-  for epoch in range(70):
-      
-      if(i%3 == 0 ):
+  for epoch in range(70): 
+      if(epoch%5 == 0 ):
         print('Epoch {}/{} LR={}'.format(epoch+1, 70, scheduler.get_last_lr()))
         print('-' * 30)
+      
+      #divide learning rate by 5 after 49 63 epochs
+      if epoch in STEPDOWN_EPOCHS:
+        optimizer.param_groups['lr']=optimizer.param_groups['lr']/STEPDOWN_FACTOR
 
       running_loss = 0.0
       running_corrects = 0
-
       # Iterate over data.
       for inputs, labels in train_dataloader:
           inputs = inputs.to(DEVICE)
           labels = labels.to(DEVICE)
 
           net.train(True)
-
           # zero the parameter gradients
           optimizer.zero_grad()
-
           # forward      
           outputs = net(inputs)
           _, preds = torch.max(outputs, 1)
           loss = criterion(outputs, labels)
-
           loss.backward()
           optimizer.step()
 
@@ -72,11 +70,9 @@ def train(net, train_dataloader):
 
       epoch_loss = running_loss / len(train_dataloader.dataset)
       epoch_acc = running_corrects.double() / len(train_dataloader.dataset)
-
-      if(i%3 == 0 ):        
+      
+      if(epoch%5 == 0 ):        
         print('Loss: {:.4f} Acc: {:.4f}'.format(epoch_loss, epoch_acc))
-
-      i+=1
   return net
 
 #test function
@@ -91,16 +87,13 @@ def test(net, test_dataloader):
 
     # Forward Pass
     outputs = net(images)
-
     # Get predictions
     _, preds = torch.max(outputs.data, 1)
-
     # Update Corrects
     running_corrects += torch.sum(preds == labels.data).data.item()
 
   # Calculate Accuracy
   accuracy = running_corrects / float(len(test_dataset))
-
   print('Test Accuracy: {}'.format(accuracy))
 
 
@@ -130,7 +123,7 @@ def main():
 
   net = resnet18(pretrained=True)
   
-  for i in range(100/BATCH_CLASSES):
+  for i in range(100/ClASSES_BATCH):
     #cambio il numero di classi di output
     net.fc = nn.Linear(512, 10+i*10)
     
@@ -173,6 +166,8 @@ def main():
       net = train(net, train_dataloader)
       print('Test on first 10 classes')
       test(net, test_dataloader)
+   
+    return #per fare solo la prima iterazione (10 classi) fin quando non si replicano i risultati
 
 if __name__ == '__main__':
     main()
