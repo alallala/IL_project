@@ -84,18 +84,18 @@ class CIFAR10(VisionDataset):
         self.data = self.data.transpose((0, 2, 3, 1))  # convert to HWC
 
         self._load_meta()
-        
+
         data = []
         targets = []
-        
+
         for i in range(len(self)):
             if self.targets[i] in classes:
                 data.append(self.data[i])
                 targets.append(self.targets[i])
-        
+
         self.data=np.array(data)
         self.targets=targets
-        
+
 
     def _load_meta(self):
         path = os.path.join(self.root, self.base_folder, self.meta['filename'])
@@ -127,7 +127,7 @@ class CIFAR10(VisionDataset):
         if self.target_transform is not None:
             target = self.target_transform(target)
 
-        return img, target
+        return img, target, index
 
 
     def __len__(self):
@@ -151,8 +151,11 @@ class CIFAR10(VisionDataset):
     def extra_repr(self):
         return "Split: {}".format("Train" if self.train is True else "Test")
 
+    def append(self, data, targets):
+        self.data = np.concatenate((self.data, data))
+        self.targets = np.concatenate((self.targets, targets))
 
-    
+
 class CIFAR100(CIFAR10):
     """`CIFAR100 <https://www.cs.toronto.edu/~kriz/cifar.html>`_ Dataset.
 
