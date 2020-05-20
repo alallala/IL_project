@@ -106,11 +106,11 @@ def test(net, test_dataloader):
 def main():
 
   #define images transformation
-  train_transform = transforms.Compose([transforms.Resize(224),
+  train_transform = transforms.Compose([#transforms.Resize(224),
                                         transforms.ToTensor(),
                                         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
-  test_transform = transforms.Compose([transforms.Resize(224),
+  test_transform = transforms.Compose([#transforms.Resize(224),
                                        transforms.ToTensor(),
                                        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
