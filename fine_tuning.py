@@ -53,7 +53,7 @@ def train(net, train_dataloader):
       running_loss = 0.0
       running_corrects = 0
       # Iterate over data.
-      for inputs, labels, _ in train_dataloader:
+      for inputs, labels in train_dataloader:
           inputs = inputs.to(DEVICE)
           labels = labels.to(DEVICE)
 
@@ -86,7 +86,7 @@ def test(net, test_dataloader):
   net.train(False)
 
   running_corrects = 0
-  for images, labels, _ in test_dataloader:
+  for images, labels in test_dataloader:
     images = images.to(DEVICE)
     labels = labels.to(DEVICE)
 
