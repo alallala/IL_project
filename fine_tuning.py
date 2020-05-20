@@ -122,7 +122,7 @@ def main():
   #net = resnet18()
   net = resnet32()
 
-  for i in range(int(100/ClASSES_BATCH)):
+  for i in range(1,int(100/ClASSES_BATCH)):
     #cambio il numero di classi di output
     net.fc = nn.Linear(64, 10+i*10)
 
@@ -137,6 +137,8 @@ def main():
       for j in range(i):
         np.concatenate((previous_classes, classes_groups[j]))
       test_prev_dataset = CIFAR100(root='data/', classes=previous_classes,  train=False, download=True, transform=test_transform)
+      print('LUNGHEZZA PREVIOUS CLASSES')
+      print(len(test_prev_dataset))
 
       #creating dataset for all classes
       all_classes = np.concatenate((previous_classes, classes_groups[i]))
