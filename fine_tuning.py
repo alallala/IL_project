@@ -124,9 +124,6 @@ def main():
 
   net = resnet18(pretrained=True)
   
-  print('DIVISION')
-  print(int(100/ClASSES_BATCH))
-  
   for i in range(int(100/ClASSES_BATCH)):
     #cambio il numero di classi di output
     net.fc = nn.Linear(512, 10+i*10)
