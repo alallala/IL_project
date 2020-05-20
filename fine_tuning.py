@@ -114,7 +114,6 @@ def main():
   
   range_classes = np.arange(100)
   classes_groups = np.array_split(range_classes, 10)
-  print(classes_groups)
 
   dataset = CIFAR100(root='data/', classes=classes_groups[0], train=True, download=True, transform=train_transform)
   test_dataset = CIFAR100(root='data/', classes=classes_groups[0],  train=False, download=True, transform=test_transform)
@@ -123,7 +122,10 @@ def main():
 
   net = resnet18(pretrained=True)
   
-  for i in range(100/ClASSES_BATCH):
+  print('DIVISION')
+  print(int(100/ClASSES_BATCH))
+  
+  for i in range(int(100/ClASSES_BATCH)):
     #cambio il numero di classi di output
     net.fc = nn.Linear(512, 10+i*10)
     
