@@ -16,7 +16,7 @@ from torchvision.models import resnet18
 ####Hyper-parameters####
 DEVICE = 'cuda' 
 NUM_CLASSES = 10 
-BATCH_SIZE = 128
+BATCH_SIZE = 64
 ClASSES_BATCH =10
 STEPDOWN_EPOCHS = [49, 63]
 STEPDOWN_FACTOR = 5
