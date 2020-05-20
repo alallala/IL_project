@@ -134,7 +134,7 @@ def main():
 
       #creating dataset for test on previous classes
       previous_classes = np.array([])
-      for j in range(i-1):
+      for j in range(i):
         np.concatenate((previous_classes, classes_groups[j]))
       test_prev_dataset = CIFAR100(root='data/', classes=previous_classes,  train=False, download=True, transform=test_transform)
 
@@ -166,7 +166,7 @@ def main():
       print('Test on first 10 classes')
       test(net, test_dataloader)
 
-    if i ==1:
+    if i==1:
         return #per fare solo la prima iterazione (10 classi) fin quando non si replicano i risultati
 
 if __name__ == '__main__':
