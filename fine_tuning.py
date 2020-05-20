@@ -135,6 +135,8 @@ def main():
       #creating dataset for test on previous classes
       previous_classes = np.array([])
       for j in range(i):
+        print('CONSIDERO GRUPPO CLASSI')
+        print(j)
         np.concatenate((previous_classes, classes_groups[j]))
       test_prev_dataset = CIFAR100(root='data/', classes=previous_classes,  train=False, download=True, transform=test_transform)
       print('LUNGHEZZA PREVIOUS CLASSES')
