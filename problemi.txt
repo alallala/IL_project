@@ -2,7 +2,8 @@ RICCARDO:
 -Non capisco bene come modificare l'input size della rete. Nonostante le dimensioni diverse il programma parte e funziona
 ma non credo che legga le immagini correttamente
 -Per ora l'ordine delle classi è fisso e sequenziale, in seguito: randomizzare in modo replicabile
-
+-Il paper dice di fare L2 normalization su i vettori e su qualsiasi vettore risultante da operazioni su questi
+per ora non l'ho fatto
 
 LAURA:
 
