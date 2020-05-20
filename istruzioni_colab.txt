@@ -1,0 +1,17 @@
+Per far partire il codice su colab:
+
+import os
+
+#!rm -r CIFAR100 #per reload cartella di github
+
+
+if not os.path.isdir('./CIFAR100'):
+  !git clone https://github.com/21ric/IL_project.git
+  !mv 'IL_project' 'CIFAR100' 
+os.chdir('CIFAR100')#change working directory for imports
+
+
+import fine_tuning as ft
+
+ft.main()
+
