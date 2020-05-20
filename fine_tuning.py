@@ -126,7 +126,7 @@ def main():
 
   for i in range(int(100/ClASSES_BATCH)):
     #cambio il numero di classi di output
-    net.fc = nn.Linear(64, 10+i*10)
+    #net.fc = nn.Linear(64, 10+i*10)
 
     if i != 0:
 
