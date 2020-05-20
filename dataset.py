@@ -155,6 +155,14 @@ class CIFAR10(VisionDataset):
         self.data = np.concatenate((self.data, data))
         self.targets = np.concatenate((self.targets, targets))
 
+    def get_class_imgs(self, target):
+        images = []
+        for i, img in enumerate(self.data):
+            if self.targets[i] == target:
+                images.append(img)
+
+        return images
+
 
 class CIFAR100(CIFAR10):
     """`CIFAR100 <https://www.cs.toronto.edu/~kriz/cifar.html>`_ Dataset.

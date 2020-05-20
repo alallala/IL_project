@@ -30,7 +30,7 @@ class iCarL(nn.Module):
     self.optimizer = optim.SGD(self.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
     self.num_classes = num_classes
     self.num_know = 0
-    self.examplars = []
+    self.exemplars = []
 
 
 
@@ -104,10 +104,52 @@ class iCarL(nn.Module):
             if i%5 == 0:
                 print("Loss: {:.4f}".format(loss.data[0]))
 
-    def reduce_examplars_set(self, m):
-        for y, examplare in enumerate(self.examplars):
-            self. examplar_sets[y] = P_y[:m]
+    def reduce_exemplars_set(self, m):
+        for y, exemplare in enumerate(self.exemplars):
+            self.exemplar_sets[y] = P_y[:m]
 
 
-    def construct_examplars_set(self):
-        pass            
+    def construct_exemplars_set(self, images, m):
+
+        features = []
+        for img in images:
+            img.to(DEVICE)
+            feature = self.feature_extractor(img)
+            features.append(feature)
+
+        class_mean = np.mean(np.array(features))
+
+        exemplar_set = []
+        exemplar_features = []
+        for k in range(m):
+            exemplar_sum = np.sum(exemplar_features)
+            candidates = (features + exemplar_sum)*1.0/(k+1)
+            candidates = np.sqrt([(class_mean-c)**2 for c in candidates])
+
+            i = np.argmin(candidates)
+
+            exemplar_set.append(images[i])
+            exemplar_features.append(features[i])
+
+            features = np.delete(features, i)
+
+        self.exemplar_set = exemplar_set
+
+    def classify(self, x):
+        #computing exemplars mean
+        exemplars_mean=[]
+        for exemplars in self.exemplar_set:
+            features = []
+            for ex in exemplars:
+                features.append(self.feature_extractor(ex))
+            exemplars_mean.append(np.mean(features))
+
+        feature = self.feature_extractor(x)
+
+        distances = np.sqrt([(feature - mean)**2 for mean in exemplars_mean])
+        pred = np.argmin(distances)
+
+        return preds
+
+
+        pass
