@@ -1,0 +1,11 @@
+RICCARDO:
+Non capisco bene come modificare l'input size della rete. Nonostante le dimensioni diverse il programma parte e funziona
+ma non credo che legga le immagini correttamente
+
+
+
+LAURA:
+
+
+
+LINDA:
