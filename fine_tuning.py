@@ -16,7 +16,7 @@ from torchvision.models import resnet18
 ####Hyper-parameters####
 DEVICE = 'cuda' 
 NUM_CLASSES = 10 
-BATCH_SIZE = 64
+BATCH_SIZE = 128
 ClASSES_BATCH =10
 STEPDOWN_EPOCHS = [49, 63]
 STEPDOWN_FACTOR = 5
@@ -121,8 +121,8 @@ def main():
   classes_groups = np.array_split(range_classes, 10)
   
 
-  #net = resnet18()
-  net = resnet32()
+  net = resnet18()
+  #net = resnet32()
   
   for i in range(int(100/ClASSES_BATCH)):
     #cambio il numero di classi di output
