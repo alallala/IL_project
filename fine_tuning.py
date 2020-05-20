@@ -9,6 +9,7 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 
 from dataset import CIFAR100
+from resnet import resnet32
 
 from torchvision.models import resnet18
 
@@ -124,7 +125,8 @@ def main():
   train_dataloader = DataLoader(dataset, batch_size=128, shuffle=True, drop_last=True, num_workers=4)  
   test_dataloader = DataLoader(test_dataset, batch_size=128, shuffle=False, drop_last=False, num_workers=4)
 
-  net = resnet18(pretrained=True)
+  #net = resnet18()
+  net = resnet32()
   
   for i in range(int(100/ClASSES_BATCH)):
     #cambio il numero di classi di output
