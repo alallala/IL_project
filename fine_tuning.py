@@ -33,12 +33,12 @@ def train(net, train_dataloader):
   #criterion = nn.BCELoss()#binary CrossEntropyLoss 
   parameters_to_optimize = net.parameters() # In this case we optimize over all the parameters of AlexNet
   optimizer = optim.SGD(parameters_to_optimize, lr=LR, weight_decay=WEIGHT_DECAY)
-  scheduler = optim.lr_scheduler.StepLR(optimizer)#, step_size=STEP_SIZE, gamma=GAMMA)
+  #scheduler = optim.lr_scheduler.StepLR(optimizer)#, step_size=STEP_SIZE, gamma=GAMMA)
   net.to(DEVICE)
 
   for epoch in range(70): 
       if(epoch%5 == 0 ):
-        print('Epoch {}/{} LR={}'.format(epoch+1, 70, scheduler.get_last_lr()))
+        print('Epoch {}/{} LR={}'.format(epoch+1, 70, optimizer.param_groups['lr']))
         print('-' * 30)
       
       #divide learning rate by 5 after 49 63 epochs
@@ -66,7 +66,7 @@ def train(net, train_dataloader):
           running_loss += loss.item() * inputs.size(0)
           running_corrects += torch.sum(preds == labels.data)
       
-      scheduler.step()
+      #scheduler.step()
 
       epoch_loss = running_loss / len(train_dataloader.dataset)
       epoch_acc = running_corrects.double() / len(train_dataloader.dataset)
