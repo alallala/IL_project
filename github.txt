@@ -31,3 +31,11 @@ istruzioni per utilizzo github:
   -git pull origin maste
 
   ovviamente sempre dentro la cartella corretta
+
+
+  PER AGGIUNGERE UN NUOVO FILE:
+  Create il nuovo file nella cartella (file.est)
+  Comandi:
+	-git add file.est
+	-git commit -am 'messaggio'
+	-git push origin master

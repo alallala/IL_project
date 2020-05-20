@@ -14,5 +14,3 @@ os.chdir('CIFAR100')#change working directory for imports
 import fine_tuning as ft
 
 ft.main()
-
-AO
