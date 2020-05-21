@@ -68,6 +68,7 @@ class iCaRL(nn.Module):
         images = images.to(DEVICE)
         indexes = indexes.to(DEVICE)
         q[indexes] = self(images)
+    print('a')
     q.to(DEVICE)
     print('2')
 
