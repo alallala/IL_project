@@ -42,7 +42,7 @@ class iCaRL(nn.Module):
 
     targets = list(set(dataset.targets))
     n = len(targets)
-    self.to(DEVICE)
+    #self.to(DEVICE)
     print('{} new classes'.format(n))
 
     #merge new data and exemplars
