@@ -120,6 +120,11 @@ class iCaRL(nn.Module):
 
     class_mean = np.mean(np.array(features))
 
+    print('LUNGHEZA IMMAGINI')
+    print(len(images))
+    print('LUNGHEZZA FEATURES')
+    print(len(features))
+
     exemplar_set = []
     exemplar_features = []
     for k in range(m):
@@ -127,14 +132,19 @@ class iCaRL(nn.Module):
         candidates = (features + exemplar_sum)*1.0/(k+1)
         candidates = np.sqrt([(class_mean-c)**2 for c in candidates])
 
+        print('LUNGHEZZA POSSIBILI')
+        print(len(candidates))
         i = np.argmin(candidates)
+        print('Indice scelto:{}'.format(i))
 
         exemplar_set.append(images[i])
         exemplar_features.append(features[i])
+        """
         print('here')
         features = np.delete(features, i)
-        images = np.delete(images.numpy(), i)
+        images = np.delete(images.numpy())
         print('after')
+        """
     self.exemplars.append(exemplar_set)
 
   #da cambiare completamente
