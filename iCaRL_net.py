@@ -67,7 +67,7 @@ class iCaRL(nn.Module):
 
     self.feature_extractor.fc = nn.Linear(in_features, out_features+n, bias=False)
     self.feature_extractor.fc.weight.data[:out_features] = weight
-    self.num_known = self.num_classes 
+    self.num_known = self.num_classes
     self.num_classes += n
 
     optimizer = self.optimizer
@@ -108,12 +108,14 @@ class iCaRL(nn.Module):
         self.exemplars[y] = exemplars[:m]
 
 
-  def construct_exemplars_set(self, images, m):
+  def construct_exemplars_set(self, images_dataset, m):
 
     features = []
-    for img in images:
+    for img, _ in dataloader:
         img.to(DEVICE)
+        print('inizio')
         feature = self.feature_extractor(img)
+        print('fine')
         features.append(feature)
 
     class_mean = np.mean(np.array(features))
