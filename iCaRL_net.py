@@ -114,7 +114,7 @@ class iCaRL(nn.Module):
     for img in images:
         img.to(DEVICE)
         print('inizio')
-        feature = self.feature_extractor(img)
+        feature = self.feature_extractor(img.unsqueeze(0)).data.numpy()
         print('fine')
         features.append(feature)
 
