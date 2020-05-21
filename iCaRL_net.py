@@ -40,6 +40,8 @@ class iCaRL(nn.Module):
 
   def update_representation(self, dataset):
 
+    targets = list(set(self.targets))
+
     self.to(DEVICE)
     print('{} new classes'.format(len(targets)))
 
@@ -67,7 +69,6 @@ class iCaRL(nn.Module):
         q[indexes] = self(images)
     q.to(DEVICE)
 
-    targets = list(set(self.targets))
 
     #Increment classes
     in_features = self.feature_extractor.fc.in_features
