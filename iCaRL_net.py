@@ -111,7 +111,7 @@ class iCaRL(nn.Module):
   def construct_exemplars_set(self, images_dataset, m):
 
     features = []
-    for img, _ in dataloader:
+    for img in images:
         img.to(DEVICE)
         print('inizio')
         feature = self.feature_extractor(img)
