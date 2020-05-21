@@ -95,11 +95,11 @@ class iCaRL(nn.Module):
             labels = labels.to(DEVICE)
             indexes = indexes.to(DEVICE)
 
-            
+
             #zero-ing the gradients
             optimizer.zero_grad()
             print(1)
-            out = self(images)
+            out = self(images.cuda())
             print(2)
             #classification Loss
             loss = self.loss(out, labels)
