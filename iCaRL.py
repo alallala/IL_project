@@ -42,12 +42,10 @@ def main():
 
     for i in range(1): #range(int(100/ClASSES_BATCH)):
 
-        print('classes_group', classes_groups[i])
 
         train_dataset = CIFAR100(root='data/', classes=classes_groups[i], train=True, download=True, transform=train_transform)
         test_dataset = CIFAR100(root='data/', classes=classes_groups[i],  train=False, download=True, transform=test_transform)
 
-        print(len(train_dataset))
         train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=True, num_workers=4)
         test_dataloader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, drop_last=False, num_workers=4)
 
@@ -58,7 +56,7 @@ def main():
         net.reduce_exemplars_set(m)
 
         for y in range( self.num_known-self.new_classes, self.num_known):
-            net.construct_exemplars_set(train_dataset.get_class_imgs(y), m)        
+            net.construct_exemplars_set(train_dataset.get_class_imgs(y), m)
 
 
 

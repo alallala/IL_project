@@ -29,8 +29,7 @@ class iCaRL(nn.Module):
 
     self.optimizer = optim.SGD(self.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
     self.num_classes = num_classes
-    self.new_classes = 0
-    self.num_know = 0
+    self.num_known = 0
     self.exemplars = []
 
 
@@ -50,8 +49,6 @@ class iCaRL(nn.Module):
     for y, exemplars in enumerate(self.exemplars):
         dataset.append(exemplars, [y]*len(exemplars))
 
-    print(len(dataset))
-
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, drop_last=True)
 
     #Store network outputs with pre-updated parameters
@@ -66,9 +63,7 @@ class iCaRL(nn.Module):
     q.to(DEVICE)
     """
     q = torch.zeros(len(dataset), self.num_classes).to(DEVICE)
-    print('1')
     for images, labels, indexes in dataloader:
-        print('iter')
         images = images.to(DEVICE)
         indexes = indexes.to(DEVICE)
         q[indexes] = self(images)
@@ -83,7 +78,6 @@ class iCaRL(nn.Module):
     self.feature_extractor.fc = nn.Linear(in_features, out_features+n, bias=False)
     self.feature_extractor.fc.weight.data[:out_features] = weight
     self.num_classes += n
-    self.new_classes = n
 
     optimizer = self.optimizer
 
@@ -119,8 +113,8 @@ class iCaRL(nn.Module):
         i+=1
 
     def reduce_exemplars_set(self, m):
-        for y, exemplare in enumerate(self.exemplars):
-            self.exemplar_sets[y] = P_y[:m]
+        for y, exemplars in enumerate(self.exemplars):
+            self.exemplar_sets[y] = exemplars[:m]
 
 
     def construct_exemplars_set(self, images, m):
@@ -147,7 +141,8 @@ class iCaRL(nn.Module):
 
             features = np.delete(features, i)
 
-        self.exemplar_set = exemplar_set
+        self.exemplar_set.append(exemplar_set)
+        self.num_known += 1
 
     #da cambiare completamente
     def classify(self, x):
