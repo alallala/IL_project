@@ -3,6 +3,8 @@ from iCaRL_net import iCaRL
 from torchvision import transforms
 from torch.utils.data import DataLoader
 
+from dataset import CIFAR100
+
 import numpy as np
 
 ####Hyper-parameters####
