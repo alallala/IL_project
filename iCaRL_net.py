@@ -62,8 +62,8 @@ class iCaRL(nn.Module):
         q[indexes] = g.data
     q.to(DEVICE)
     """
-    print('1')
-    q = torch.zeros(len(dataset), self.num_classes).to(DEVICE)
+
+    q = torch.zeros(len(dataset), self.num_classes)
     for images, labels, indexes in dataloader:
         images = images.to(DEVICE)
         indexes = indexes.to(DEVICE)
