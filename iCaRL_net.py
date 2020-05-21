@@ -130,7 +130,7 @@ class iCaRL(nn.Module):
     for k in range(m):
         exemplar_sum = np.sum(exemplar_features)
         candidates = (features + exemplar_sum)*1.0/(k+1)
-        candidates = np.sqrt([(class_mean-c)**2 for c in candidates])
+        candidates = np.sqrt(np.sum(class_mean-candidares)**2, axis=1) 
 
         print('LUNGHEZZA POSSIBILI')
         print(len(candidates))
