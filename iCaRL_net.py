@@ -51,7 +51,7 @@ class iCaRL(nn.Module):
 
     print(len(dataset))
 
-    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 
     #Store network outputs with pre-updated parameters
     """
