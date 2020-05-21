@@ -41,9 +41,9 @@ class iCaRL(nn.Module):
   def update_representation(self, dataset):
 
     targets = list(set(dataset.targets))
-
+    n = len(targets)
     self.to(DEVICE)
-    print('{} new classes'.format(len(targets)))
+    print('{} new classes'.format(n))
 
     #merge new data and exemplars
     for y, exemplars in enumerate(self.exemplars):
