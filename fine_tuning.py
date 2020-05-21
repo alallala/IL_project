@@ -64,7 +64,7 @@ def train(net, train_dataloader, val_dataloader):
       # TRAINING
       #
       # Iterate over data.
-      for inputs, labels, _ in train_dataloader:
+      for inputs, labels, index in train_dataloader:
           inputs = inputs.to(DEVICE)
           labels = labels.to(DEVICE)
 
@@ -85,7 +85,7 @@ def train(net, train_dataloader, val_dataloader):
       #
       # VALIDATION
       #
-      for inputs, labels, _ in val_dataloader:
+      for inputs, labels, index in val_dataloader:
           inputs = inputs.to(DEVICE)
           labels = labels.to(DEVICE)
 
