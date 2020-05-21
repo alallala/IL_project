@@ -25,7 +25,7 @@ class iCarL(nn.Module):
     self.feature_extractor.fc = nn.Linear(64, num_classes)
 
     self.loss = nn.CrossEntropyLoss()
-    self.dist_loss = nn.BCELoss()
+    self.dist_loss = nn.BCEWithLogitsLoss()
 
     self.optimizer = optim.SGD(self.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
     self.num_classes = num_classes
@@ -39,6 +39,34 @@ class iCarL(nn.Module):
     return(x)
 
   def update_representation(self, dataset):
+
+    self.to(DEVICE)
+    print('{} new classes'.format(len(targets)))
+
+    #merge new data and exemplars
+    for y, exemplars in enumerate(self.exemplars):
+        dataset.append(exemplars, [y]*len(exemplars))
+
+    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+
+    #Store network outputs with pre-updated parameters
+    """
+    q = torch.zeros(len(dataset), self.n_classes).to(DEVICE)
+    for images, labels, indexes in dataloader:
+        images = images.to(DEVICE)
+        indexes = indexes.to(DEVICE)
+
+        g = F.sigmoid(self(images))
+        q[indexes] = g.data
+    q.to(DEVICE)
+    """
+    q = torch.zeros(len(dataset), self.n_classes).to(DEVICE)
+    for images, labels, indexes in dataloader:
+        images = images.to(DEVICE)
+        indexes = indexes.to(DEVICE)
+        q[indexes] = self(images)
+    q.to(DEVICE)
+
     targets = list(set(self.targets))
 
     #Increment classes
@@ -51,25 +79,6 @@ class iCarL(nn.Module):
     self.feature_extractor.fc.weight.data[:out_features] = weight
     self.feature_extractor.fc.bias.data[:out_features] = bias
     self.num_classes += n
-
-    self.to(DEVICE)
-    print('{} new classes'.format(len(targets)))
-
-    #merge new data and exemplars
-    for y, exemplars in enumerate(self.exemplars):
-        dataset.append(exemplars, [y]*len(exemplars))
-
-    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
-
-    #Store network outputs with pre-updated parameters
-    q = torch.zeros(len(dataset), self.n_classes).to(DEVICE)
-    for images, labels, indexes in dataloader:
-        images = images.to(DEVICE)
-        indexes = indexes.to(DEVICE)
-
-        g = F.sigmoid(self(images))
-        q[indexes] = g.data
-    q.to(DEVICE)
 
     optimizer = self.optimizer
 
@@ -85,16 +94,15 @@ class iCarL(nn.Module):
 
             #zero-ing the gradients
             optimizer.zero_grd()
-            g = self(images)
+            out = self(images)
 
             #classification Loss
-            loss = self.loss(g, labels)
+            loss = self.loss(out, labels)
 
             #distillation Loss
             if self.num_know > 0:
-                g = F.sigmoid(g)
                 q_i = q[indexes]
-                dist_loss = sum(self.dist_loss(g[:, y], q_i[:, y]) for y in range(self.num_known))
+                dist_loss = sum(self.dist_loss(out[:, y], q_i[:, y]) for y in range(self.num_known))
 
                 loss += dist_loss
 
@@ -135,13 +143,14 @@ class iCarL(nn.Module):
 
         self.exemplar_set = exemplar_set
 
+    #da cambiare completamente
     def classify(self, x):
         #computing exemplars mean
         exemplars_mean=[]
         for exemplars in self.exemplar_set:
             features = []
             for ex in exemplars:
-                features.append(self.feature_extractor(ex))
+                features.append(self.feature_extractor.extract_features(ex))
             exemplars_mean.append(np.mean(features))
 
         feature = self.feature_extractor(x)
@@ -150,6 +159,3 @@ class iCarL(nn.Module):
         pred = np.argmin(distances)
 
         return preds
-
-
-        pass
