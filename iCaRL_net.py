@@ -134,17 +134,17 @@ class iCaRL(nn.Module):
 
         print('LUNGHEZZA POSSIBILI')
         print(len(candidates))
+        print('first 5 candidates')
+        print(candidates[0:5])
         i = np.argmin(candidates)
         print('Indice scelto:{}'.format(i))
 
         exemplar_set.append(images[i])
         exemplar_features.append(features[i])
-        """
-        print('here')
+
         features = np.delete(features, i)
         images = np.delete(images.numpy())
-        print('after')
-        """
+
     self.exemplars.append(exemplar_set)
 
   #da cambiare completamente
