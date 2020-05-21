@@ -95,13 +95,14 @@ class iCaRL(nn.Module):
             labels = labels.to(DEVICE)
             indexes = indexes.to(DEVICE)
 
+            print(1)
             #zero-ing the gradients
             optimizer.zero_grad()
             out = self(images)
-
+            print(2)
             #classification Loss
             loss = self.loss(out, labels)
-
+            print(3)
             #distillation Loss
             if self.num_know > 0:
                 q_i = q[indexes]
