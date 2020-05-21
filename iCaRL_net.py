@@ -40,7 +40,7 @@ class iCaRL(nn.Module):
 
   def update_representation(self, dataset):
 
-    targets = list(set(datset.targets))
+    targets = list(set(dataset.targets))
 
     self.to(DEVICE)
     print('{} new classes'.format(len(targets)))
