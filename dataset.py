@@ -159,6 +159,15 @@ class CIFAR10(VisionDataset):
         images = []
         for i, img in enumerate(self.data):
             if self.targets[i] == target:
+
+                img = Image.fromarray(img)
+
+                if self.transform is not None:
+                    img = self.transform(img)
+
+                if self.target_transform is not None:
+                    target = self.target_transform(target)
+
                 images.append(img)
 
         return images
