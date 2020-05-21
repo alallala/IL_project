@@ -51,7 +51,7 @@ class iCaRL(nn.Module):
 
     print(len(dataset))
 
-    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, drop_last=True)
 
     #Store network outputs with pre-updated parameters
     """
@@ -65,6 +65,7 @@ class iCaRL(nn.Module):
     q.to(DEVICE)
     """
     q = torch.zeros(len(dataset), self.num_classes).to(DEVICE)
+    print('1')
     for images, labels, indexes in dataloader:
         images = images.to(DEVICE)
         indexes = indexes.to(DEVICE)
