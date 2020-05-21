@@ -108,7 +108,7 @@ class iCaRL(nn.Module):
         self.exemplars[y] = exemplars[:m]
 
 
-  def construct_exemplars_set(self, images_dataset, m):
+  def construct_exemplars_set(self, images, m):
 
     features = []
     for img in images:
