@@ -110,12 +110,13 @@ class iCaRL(nn.Module):
 
   def construct_exemplars_set(self, images, m):
 
+    self.feature_extractor.to(DEVICE)
     features = []
     for img in images:
         img = img.unsqueeze(0)
         img.to(DEVICE)
         print('inizio')
-        feature = self.feature_extractor(img).data.numpy()
+        feature = self.feature_extractor.extract_features(img).data.numpy()
         print('fine')
         features.append(feature)
 
