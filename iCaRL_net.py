@@ -78,11 +78,9 @@ class iCaRL(nn.Module):
     in_features = self.feature_extractor.fc.in_features
     out_features = self.feature_extractor.fc.out_features
     weight = self.feature_extractor.fc.weight.data
-    bias = self.feature_extractor.fc.bias.data
 
     self.feature_extractor.fc = nn.Linear(in_features, out_features+n, bias=False)
     self.feature_extractor.fc.weight.data[:out_features] = weight
-    self.feature_extractor.fc.bias.data[:out_features] = bias
     self.num_classes += n
 
     optimizer = self.optimizer
@@ -98,7 +96,7 @@ class iCaRL(nn.Module):
             indexes = indexes.to(DEVICE)
 
             #zero-ing the gradients
-            optimizer.zero_grd()
+            optimizer.zero_grad()
             out = self(images)
 
             #classification Loss
@@ -115,7 +113,7 @@ class iCaRL(nn.Module):
             optimizer.step()
 
             if i%5 == 0:
-                print("Loss: {:.4f}".format(loss.data[0]))
+                print("Loss: {:.4f}".format(loss.item()))
 
     def reduce_exemplars_set(self, m):
         for y, exemplare in enumerate(self.exemplars):
