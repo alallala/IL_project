@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 import numpy as np
 from PIL import Image
 
-from resnet import resnet18
+from resnet import resnet32
 
 ####Hyper-parameters####
 LR = 2
@@ -21,7 +21,7 @@ DEVICE = 'cuda'
 class iCarL(nn.Module):
   def __init__(self, num_classes):
     super(iCarl,self).__init__()
-    self.feature_extractor = resnet18()
+    self.feature_extractor = resnet32()
     self.feature_extractor.fc = nn.Linear(64, num_classes)
 
     self.loss = nn.CrossEntropyLoss()
