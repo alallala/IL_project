@@ -52,16 +52,6 @@ class iCaRL(nn.Module):
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, drop_last=True)
 
     #Store network outputs with pre-updated parameters
-    """
-    q = torch.zeros(len(dataset), self.n_classes).to(DEVICE)
-    for images, labels, indexes in dataloader:
-        images = images.to(DEVICE)
-        indexes = indexes.to(DEVICE)
-
-        g = F.sigmoid(self(images))
-        q[indexes] = g.data
-    q.to(DEVICE)
-    """
     q = torch.zeros(len(dataset), self.num_classes).to(DEVICE)
     for images, labels, indexes in dataloader:
         images = images.to(DEVICE)
@@ -114,7 +104,7 @@ class iCaRL(nn.Module):
 
   def reduce_exemplars_set(self, m):
     for y, exemplars in enumerate(self.exemplars):
-        self.exemplar_sets[y] = exemplars[:m]
+        self.exemplars[y] = exemplars[:m]
 
 
   def construct_exemplars_set(self, images, m):
@@ -141,14 +131,14 @@ class iCaRL(nn.Module):
 
         features = np.delete(features, i)
 
-    self.exemplar_set.append(exemplar_set)
+    self.exemplars.append(exemplar_set)
     self.num_known += 1
 
   #da cambiare completamente
   def classify(self, x):
     #computing exemplars mean
     exemplars_mean=[]
-    for exemplars in self.exemplar_set:
+    for exemplars in self.exemplars:
         features = []
         for ex in exemplars:
             features.append(self.feature_extractor.extract_features(ex))
