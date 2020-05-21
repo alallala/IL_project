@@ -67,6 +67,7 @@ class iCaRL(nn.Module):
 
     self.feature_extractor.fc = nn.Linear(in_features, out_features+n, bias=False)
     self.feature_extractor.fc.weight.data[:out_features] = weight
+    self.num_known = self.num_classes 
     self.num_classes += n
 
     optimizer = self.optimizer
@@ -132,7 +133,6 @@ class iCaRL(nn.Module):
         features = np.delete(features, i)
 
     self.exemplars.append(exemplar_set)
-    self.num_known += 1
 
   #da cambiare completamente
   def classify(self, x):

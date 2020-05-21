@@ -55,7 +55,10 @@ def main():
 
         net.reduce_exemplars_set(m)
 
-        for y in range( net.num_classes - net.num_known, net.num_classes):
+        print('classes')
+        print(net.num_classes,net.num_known )
+
+        for y in range(net.num_known, net.num_classes):
             net.construct_exemplars_set(train_dataset.get_class_imgs(y), m)
 
         print('Lunghezze exemplar set')
