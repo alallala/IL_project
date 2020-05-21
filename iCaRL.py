@@ -58,6 +58,11 @@ def main():
         for y in range( net.num_classes - net.num_known, net.num_classes):
             net.construct_exemplars_set(train_dataset.get_class_imgs(y), m)
 
+        print('Lunghezze exemplar set')
+        print(len(net.exemplar_set))
+        print('Lunghezza di ogni set')
+        for el in net.exemplar_set:
+            print(len(el))
 
 
 if __name__ == '__main__':
