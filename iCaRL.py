@@ -7,6 +7,8 @@ from dataset import CIFAR100
 
 import numpy as np
 
+import math
+
 ####Hyper-parameters####
 DEVICE = 'cuda'
 NUM_CLASSES = 10
@@ -51,7 +53,7 @@ def main():
 
         net.update_representation(dataset = train_dataset)
 
-        m = MEMORY_SIZE/net.num_classes
+        m = int(mat.ceil(MEMORY_SIZE/net.num_classes))
 
         net.reduce_exemplars_set(m)
 
