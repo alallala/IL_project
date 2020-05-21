@@ -86,6 +86,7 @@ class iCaRL(nn.Module):
     optimizer = self.optimizer
 
     i = 0
+    self.to(DEVICE)
     for epoch in range(NUM_EPOCHS):
         for images, labels, indexes in dataloader:
             if i%5 == 0:
@@ -98,12 +99,9 @@ class iCaRL(nn.Module):
 
             #zero-ing the gradients
             optimizer.zero_grad()
-            print(1)
-            out = self.forward(images)
-            print(2)
+            out = self(images)
             #classification Loss
             loss = self.loss(out, labels)
-            print(3)
             #distillation Loss
             if self.num_know > 0:
                 q_i = q[indexes]
