@@ -63,14 +63,12 @@ class iCaRL(nn.Module):
     q.to(DEVICE)
     """
 
-    q = torch.zeros(len(dataset), self.num_classes).cuda()
+    q = torch.zeros(len(dataset), self.num_classes).to(DEVICE)
     for images, labels, indexes in dataloader:
         images = images.to(DEVICE)
         indexes = indexes.to(DEVICE)
         q[indexes] = self(images)
-    print('a')
     q.to(DEVICE)
-    print('2')
 
 
     #Increment classes
