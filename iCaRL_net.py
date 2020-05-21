@@ -20,7 +20,7 @@ DEVICE = 'cuda'
 
 class iCaRL(nn.Module):
   def __init__(self, num_classes):
-    super(iCarl,self).__init__()
+    super(iCaRL,self).__init__()
     self.feature_extractor = resnet32()
     self.feature_extractor.fc = nn.Linear(64, num_classes)
 
