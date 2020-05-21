@@ -81,9 +81,6 @@ class iCaRL(nn.Module):
 
     optimizer = self.optimizer
 
-    print('allocating in gpu')
-    self.to(DEVICE)
-    print('success')
     i = 0
     for epoch in range(NUM_EPOCHS):
         for images, labels, indexes in dataloader:
