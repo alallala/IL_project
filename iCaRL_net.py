@@ -62,12 +62,14 @@ class iCaRL(nn.Module):
         q[indexes] = g.data
     q.to(DEVICE)
     """
+    print('1')
     q = torch.zeros(len(dataset), self.num_classes).to(DEVICE)
     for images, labels, indexes in dataloader:
         images = images.to(DEVICE)
         indexes = indexes.to(DEVICE)
         q[indexes] = self(images)
     q.to(DEVICE)
+    print('2')
 
 
     #Increment classes
@@ -93,6 +95,7 @@ class iCaRL(nn.Module):
 
             #zero-ing the gradients
             optimizer.zero_grad()
+            print('here')
             out = self(images)
 
             #classification Loss
@@ -109,7 +112,7 @@ class iCaRL(nn.Module):
             optimizer.step()
 
             if i%5 == 0:
-                print("Loss: {:.4f}".format(loss.item()))
+                print("Loss: {:.4f}".format(loss[0])
 
     def reduce_exemplars_set(self, m):
         for y, exemplare in enumerate(self.exemplars):
