@@ -38,7 +38,7 @@ def main():
     classes_groups = np.array_split(range_classes, 10)
 
 
-    net = iCaRL(10)
+    net = iCaRL(0)
 
     for i in range(1): #range(int(100/ClASSES_BATCH)):
 
@@ -53,6 +53,12 @@ def main():
 
         net.update_representation(dataset = train_dataset)
 
+        m = MEMORY_SIZE/net.num_known
+
+        net.reduce_exemplars_set(m)
+
+        for y in range( self.num_known-self.new_classes, self.num_known):
+            net.construct_exemplars_set(train_dataset.get_class_imgs(y), m)        
 
 
 

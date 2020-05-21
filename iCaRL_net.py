@@ -29,6 +29,7 @@ class iCaRL(nn.Module):
 
     self.optimizer = optim.SGD(self.parameters(), lr=LR, weight_decay=WEIGHT_DECAY)
     self.num_classes = num_classes
+    self.new_classes = 0
     self.num_know = 0
     self.exemplars = []
 
@@ -82,6 +83,7 @@ class iCaRL(nn.Module):
     self.feature_extractor.fc = nn.Linear(in_features, out_features+n, bias=False)
     self.feature_extractor.fc.weight.data[:out_features] = weight
     self.num_classes += n
+    self.new_classes = n
 
     optimizer = self.optimizer
 
