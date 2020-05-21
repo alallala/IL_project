@@ -88,10 +88,10 @@ class iCaRL(nn.Module):
     i = 0
     self.to(DEVICE)
     for epoch in range(NUM_EPOCHS):
+        if i%5 == 0:
+            print('-'*30)
+            print('Epoch {}/{}'.format(i+1, NUM_EPOCHS))
         for images, labels, indexes in dataloader:
-            if i%5 == 0:
-                print('-'*30)
-                print('Epoch {}/{}'.format(i+1, NUM_EPOCHS))
             images = images.to(DEVICE)
             labels = labels.to(DEVICE)
             indexes = indexes.to(DEVICE)
@@ -112,8 +112,8 @@ class iCaRL(nn.Module):
             loss.backward()
             optimizer.step()
 
-            if i%5 == 0:
-                print("Loss: {:.4f}".format(loss.item()))
+        if i%5 == 0:
+            print("Loss: {:.4f}".format(loss.item()))
 
     def reduce_exemplars_set(self, m):
         for y, exemplare in enumerate(self.exemplars):
