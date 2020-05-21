@@ -3,6 +3,8 @@ from iCaRL_net import iCaRL
 from torchvision import transforms
 from torch.utils.data import DataLoader
 
+import numpy as np
+
 ####Hyper-parameters####
 DEVICE = 'cuda'
 NUM_CLASSES = 10
