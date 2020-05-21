@@ -115,9 +115,7 @@ class iCaRL(nn.Module):
     for img in images:
         img = img.unsqueeze(0)
         img = img.to(DEVICE)
-        print('inizio')
         feature = feature_extractor.extract_features(img).data.cpu().numpy()
-        print('fine')
         features.append(feature)
 
     class_mean = np.mean(np.array(features))
@@ -133,9 +131,10 @@ class iCaRL(nn.Module):
 
         exemplar_set.append(images[i])
         exemplar_features.append(features[i])
-
+        print('here')
         features = np.delete(features, i)
-
+        images = np.delete(images.numpy(), i)
+        print('after')
     self.exemplars.append(exemplar_set)
 
   #da cambiare completamente
