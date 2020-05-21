@@ -130,27 +130,27 @@ class iCaRL(nn.Module):
     for k in range(m):
         exemplar_sum = np.sum(exemplar_features)
         candidates = (features + exemplar_sum)*1.0/(k+1)
-        candidates = np.sqrt(np.sum((class_mean-candidates)**2, axis=1))
+        candidates = np.sqrt([(class_mean-c)**2 for c in candidates])
 
         print('LUNGHEZZA POSSIBILI')
         print(len(candidates))
-        print('first 5 candidates')
-        print(candidates[0:5])
         i = np.argmin(candidates)
         print('Indice scelto:{}'.format(i))
 
         exemplar_set.append(images[i])
         exemplar_features.append(features[i])
-
+        """
+        print('here')
         features = np.delete(features, i)
         images = np.delete(images.numpy())
-
+        print('after')
+        """
     self.exemplars.append(exemplar_set)
 
   #da cambiare completamente
-  def classify(self, x):
+  '''def classify(self, x):
     #computing exemplars mean
-    exemplars_mean=[]
+    _means=[]
     for exemplars in self.exemplars:
         features = []
         for ex in exemplars:
@@ -160,6 +160,49 @@ class iCaRL(nn.Module):
     feature = self.feature_extractor(x)
 
     distances = np.sqrt([(feature - mean)**2 for mean in exemplars_mean])
-    pred = np.argmin(distances)
+    pred = np.argmin(distances)'''
+    
+    def classify(self, dataloader):
+       
+        #compute the mean for each examplars 
+        exemplar_means=[]
+        for exemplars in self.exemplars:
+            features = []
+        
+        for ex in exemplars:
+            features.append(self.feature_extractor.extract_features(ex))
+        exemplar_means.append(np.mean(features))
+        
+        if exemplar_means is None:
+            raise ValueError(
+                "Cannot classify without built examplar means,"
+            )
+        
+        if exemplar_means.shape[0] != self._n_classes:
+            raise ValueError(
+                "The number of examplar means ({}) is inconsistent".format(exemplar_means.shape[0])"
+            )
 
-    return preds
+        ypred = []
+        ytrue = []
+
+        for _, inputs, targets in dataloader:
+            inputs = inputs.to(DEVICE)
+            #compute the feature map of the input 
+            features = self.feature_extractor(inputs)
+            
+            pred_labels = []
+            
+            for feature in features:
+              #computing L2 distance
+              distances = torch.pow(examplar_mean - feature, 2).sum(-1)
+              pred_labels.append(distances.argmin().item())
+              
+            preds = np.array(pred_labels)
+
+            ypred.extend(preds)
+            ytrue.extend(targets)
+
+        return np.array(ypred), np.array(ytrue)
+
+  
