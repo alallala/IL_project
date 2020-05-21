@@ -10,3 +10,6 @@ LAURA:
 
 
 LINDA:
+- in resnet.py:
+    out = self.relu(out) oppure  y = F.relu(y) , import torch.nn.functional as F
+- TODO: architettura resnet
