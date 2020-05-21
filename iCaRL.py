@@ -59,9 +59,9 @@ def main():
             net.construct_exemplars_set(train_dataset.get_class_imgs(y), m)
 
         print('Lunghezze exemplar set')
-        print(len(net.exemplar_set))
+        print(len(net.exemplars))
         print('Lunghezza di ogni set')
-        for el in net.exemplar_set:
+        for el in net.exemplars:
             print(len(el))
 
 
