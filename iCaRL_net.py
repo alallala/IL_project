@@ -112,51 +112,51 @@ class iCaRL(nn.Module):
             print("Loss: {:.4f}".format(loss.item()))
         i+=1
 
-    def reduce_exemplars_set(self, m):
-        for y, exemplars in enumerate(self.exemplars):
-            self.exemplar_sets[y] = exemplars[:m]
+  def reduce_exemplars_set(self, m):
+    for y, exemplars in enumerate(self.exemplars):
+        self.exemplar_sets[y] = exemplars[:m]
 
 
-    def construct_exemplars_set(self, images, m):
+  def construct_exemplars_set(self, images, m):
 
+    features = []
+    for img in images:
+        img.to(DEVICE)
+        feature = self.feature_extractor(img)
+        features.append(feature)
+
+    class_mean = np.mean(np.array(features))
+
+    exemplar_set = []
+    exemplar_features = []
+    for k in range(m):
+        exemplar_sum = np.sum(exemplar_features)
+        candidates = (features + exemplar_sum)*1.0/(k+1)
+        candidates = np.sqrt([(class_mean-c)**2 for c in candidates])
+
+        i = np.argmin(candidates)
+
+        exemplar_set.append(images[i])
+        exemplar_features.append(features[i])
+
+        features = np.delete(features, i)
+
+    self.exemplar_set.append(exemplar_set)
+    self.num_known += 1
+
+  #da cambiare completamente
+  def classify(self, x):
+    #computing exemplars mean
+    exemplars_mean=[]
+    for exemplars in self.exemplar_set:
         features = []
-        for img in images:
-            img.to(DEVICE)
-            feature = self.feature_extractor(img)
-            features.append(feature)
+        for ex in exemplars:
+            features.append(self.feature_extractor.extract_features(ex))
+        exemplars_mean.append(np.mean(features))
 
-        class_mean = np.mean(np.array(features))
+    feature = self.feature_extractor(x)
 
-        exemplar_set = []
-        exemplar_features = []
-        for k in range(m):
-            exemplar_sum = np.sum(exemplar_features)
-            candidates = (features + exemplar_sum)*1.0/(k+1)
-            candidates = np.sqrt([(class_mean-c)**2 for c in candidates])
+    distances = np.sqrt([(feature - mean)**2 for mean in exemplars_mean])
+    pred = np.argmin(distances)
 
-            i = np.argmin(candidates)
-
-            exemplar_set.append(images[i])
-            exemplar_features.append(features[i])
-
-            features = np.delete(features, i)
-
-        self.exemplar_set.append(exemplar_set)
-        self.num_known += 1
-
-    #da cambiare completamente
-    def classify(self, x):
-        #computing exemplars mean
-        exemplars_mean=[]
-        for exemplars in self.exemplar_set:
-            features = []
-            for ex in exemplars:
-                features.append(self.feature_extractor.extract_features(ex))
-            exemplars_mean.append(np.mean(features))
-
-        feature = self.feature_extractor(x)
-
-        distances = np.sqrt([(feature - mean)**2 for mean in exemplars_mean])
-        pred = np.argmin(distances)
-
-        return preds
+    return preds
