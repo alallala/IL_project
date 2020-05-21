@@ -81,6 +81,8 @@ class iCaRL(nn.Module):
 
     optimizer = self.optimizer
 
+    self.to(DEVICE)
+
     i = 0
     for epoch in range(NUM_EPOCHS):
         for images, labels, indexes in dataloader:
