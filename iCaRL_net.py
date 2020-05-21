@@ -18,7 +18,7 @@ DEVICE = 'cuda'
 ########################
 
 
-class iCarL(nn.Module):
+class iCaRL(nn.Module):
   def __init__(self, num_classes):
     super(iCarl,self).__init__()
     self.feature_extractor = resnet32()
