@@ -114,6 +114,7 @@ class iCaRL(nn.Module):
 
         if i%5 == 0:
             print("Loss: {:.4f}".format(loss.item()))
+        i+=1
 
     def reduce_exemplars_set(self, m):
         for y, exemplare in enumerate(self.exemplars):
