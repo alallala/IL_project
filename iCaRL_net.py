@@ -111,7 +111,7 @@ class iCaRL(nn.Module):
             optimizer.step()
 
             if i%5 == 0:
-                print("Loss: {:.4f}".format(loss.data[0]))
+                print("Loss: {:.4f}".format(loss.item()))
 
     def reduce_exemplars_set(self, m):
         for y, exemplare in enumerate(self.exemplars):
