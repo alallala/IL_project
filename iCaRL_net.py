@@ -49,6 +49,8 @@ class iCaRL(nn.Module):
     for y, exemplars in enumerate(self.exemplars):
         dataset.append(exemplars, [y]*len(exemplars))
 
+    print(len(dataset))
+
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
 
     #Store network outputs with pre-updated parameters
