@@ -20,7 +20,7 @@ BATCH_SIZE = 128
 ClASSES_BATCH =10
 STEPDOWN_EPOCHS = [49, 63]
 STEPDOWN_FACTOR = 5
-LR = 2
+LR = 0.2
 MOMENTUM = 0.9
 WEIGHT_DECAY = 0.00001
 NUM_EPOCHS = 70
@@ -105,12 +105,18 @@ def test(net, test_dataloader):
 
 def main():
 
-  #define images transformation
-  train_transform = transforms.Compose([transforms.ToTensor(),
-                                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+#define images transformation
+  train_transform = transforms.Compose([transforms.RandomCrop(32, padding=4),
+                                        transforms.RandomHorizontalFlip(),
+                                        transforms.ToTensor(),
+                                        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+                                        #transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))
+                                       ])
 
   test_transform = transforms.Compose([transforms.ToTensor(),
-                                       transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+                                       transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+                                       #transforms.Normalize((0.5071, 0.4867, 0.4408), (0.2675, 0.2565, 0.2761))
+                                      ])
 
   #creo i dataset per ora prendo solo le prime 10 classi per testare, ho esteso la classe cifar 100 con attributo
   #classes che è una lista di labels, il dataset carica solo le foto con quelle labels
