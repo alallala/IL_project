@@ -41,7 +41,7 @@ def main():
         train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, drop_last=True, num_workers=4)
         test_dataloader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, drop_last=False, num_workers=4)
 
-        iCaRL.update_representation(train_dataset)
+        iCaRL.update_representation(dataset = train_dataset)
 
 
 
