@@ -92,7 +92,7 @@ class iCaRL(nn.Module):
             indexes = indexes.to(DEVICE)
 
             #zero-ing the gradients
-            optimizer.zero_grd()
+            optimizer.zero_gard()
             out = self(images)
 
             #classification Loss
