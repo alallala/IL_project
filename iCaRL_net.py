@@ -43,7 +43,7 @@ class iCaRL(nn.Module):
     targets = list(set(dataset.targets))
     n = len(targets)
     self.to(DEVICE)
-    print('{} new classes'.format(n))
+    print('{} new classes'.format(len(targets)))
 
     #merge new data and exemplars
     for y, exemplars in enumerate(self.exemplars):
@@ -74,9 +74,11 @@ class iCaRL(nn.Module):
     in_features = self.feature_extractor.fc.in_features
     out_features = self.feature_extractor.fc.out_features
     weight = self.feature_extractor.fc.weight.data
+    bias = self.feature_extractor.fc.bias.data
 
     self.feature_extractor.fc = nn.Linear(in_features, out_features+n, bias=False)
     self.feature_extractor.fc.weight.data[:out_features] = weight
+    self.feature_extractor.fc.bias.data[:out_features] = bias
     self.num_classes += n
 
     optimizer = self.optimizer
@@ -92,7 +94,7 @@ class iCaRL(nn.Module):
             indexes = indexes.to(DEVICE)
 
             #zero-ing the gradients
-            optimizer.zero_grad()
+            optimizer.zero_grd()
             out = self(images)
 
             #classification Loss
