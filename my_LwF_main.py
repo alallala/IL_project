@@ -82,7 +82,8 @@ def main():
       
         print("\n")
                 
-        # Load Datasets                                            
+        # Load Datasets    
+        
                                                              #train data_loader loads images in classes [0:10] then in [10:20] etc..          
         train_dataset = CIFAR100(root='data',train=True,classes=all_classes[s:s+CLASSES_BATCH],download=True,transform=train_transform)
         train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE,shuffle=True, num_workers=4)
