@@ -3,7 +3,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from tqdm import trange
-from inclearn import factory, utils
+import utils
 from inclearn.models.base import IncrementalLearner
 from resnet import resnet32
 
