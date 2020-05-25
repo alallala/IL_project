@@ -1,4 +1,4 @@
-from my_LWF import LwF
+from my_LwF import LwF
 
 
 from torchvision import transforms
