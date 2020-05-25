@@ -12,6 +12,8 @@ BATCH_SIZE = 128
 CLASSES_BATCH = 10
 MEMORY_SIZE = 2000
 WEIGHT_DECAY = 0.00005
+LR = 2
+NUM_EPOCHS = 70
 
 class LwF(nn.Module):
     """Implementation of Learning without Forgetting.
