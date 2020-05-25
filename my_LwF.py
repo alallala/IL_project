@@ -16,11 +16,9 @@ LR = 2
 NUM_EPOCHS = 70
 
 class LwF(nn.Module):
-    """Implementation of Learning without Forgetting.
-    :param args: An argparse parsed arguments object.
-    """
     
-    def __init__(self):
+    def __init__(self, feature_size):
+        super(LwF,self).__init__()
       
         self._device = 0
         self._opt_name = 'sgd'
@@ -40,6 +38,8 @@ class LwF(nn.Module):
         self._add_n_classes(10, convnet=resnet32())
 
         self.task_size = CLASSES_BATCH
+        
+        self.feature_size = feature_size
 
         self.to(self._device)
 
@@ -124,7 +124,7 @@ class LwF(nn.Module):
 
         # first iteration
         if self._n_classes == 0:
-            self._features_extractor = resnet32(num_classes=2048)
+            self._features_extractor = resnet32(num_classes=self.feature_size)
             self._classifier = nn.Linear(self._features_extractor.out_dim, n, bias=False)
             torch.nn.init.kaiming_normal_(self._classifier.weight)
 
