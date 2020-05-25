@@ -30,7 +30,7 @@ class LwF(nn.Module):
         
         self._lr_decay = 5
         
-        self.feature_extractor = resnet32(num_classes=feature_size)
+        self.features_extractor = resnet32(num_classes=feature_size)
         
         self._temperature = 1
 
