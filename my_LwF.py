@@ -27,8 +27,11 @@ class LwF(nn.Module):
         self._n_epochs = NUM_EPOCHS
 
         self._scheduling = [49,63]
+        
         self._lr_decay = 5
-
+        
+        self.feature_extractor = resnet32(num_classes=feature_size)
+        
         self._temperature = 1
 
         self._n_classes = 0
@@ -38,8 +41,6 @@ class LwF(nn.Module):
         self._add_n_classes(10, convnet=resnet32())
 
         self.task_size = CLASSES_BATCH
-        
-        self.feature_size = feature_size
 
         self.to(self._device)
 
@@ -124,8 +125,8 @@ class LwF(nn.Module):
 
         # first iteration
         if self._n_classes == 0:
-            self._features_extractor = resnet32(num_classes=self.feature_size)
-            self._classifier = nn.Linear(self._features_extractor.out_dim, n, bias=False)
+            
+            self._classifier = nn.Linear(self.features_extractor.out_dim, n, bias=False)
             torch.nn.init.kaiming_normal_(self._classifier.weight)
 
         else:
