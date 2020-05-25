@@ -1,4 +1,4 @@
-from LWF_net import LwF
+from my_LWF import LwF
 
 from torchvision import transforms
 from torch.utils.data import DataLoader
@@ -8,7 +8,7 @@ from dataset import CIFAR100
 
 import numpy as np
 from numpy import random
-from inclearn.models.base import IncrementalLearner
+
 
 
 ####Hyper-parameters####
@@ -68,7 +68,7 @@ def main():
 '''
 
     # Create Network
-    net = LwF(IncrementalLearner)
+    net = LwF()
  
       
     #iterating until the net knows total_classes with 10 by 10 steps 
