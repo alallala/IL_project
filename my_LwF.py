@@ -59,8 +59,7 @@ class LwF(IncrementalLearner):
             self._previous_preds = self._compute_predictions(data_loader)
             self._add_n_classes(self._task_size)
 
-        self._optimizer = factory.get_optimizer(self.parameters(), self._opt_name, self._lr,
-                                                self._weight_decay)
+        self._optimizer = optim.Adam(self.parameters(),self._lr,self._weight_decay)
 
         self._scheduler = torch.optim.lr_scheduler.MultiStepLR(self._optimizer,
                                                                self._scheduling,
