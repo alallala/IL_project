@@ -13,13 +13,14 @@ CLASSES_BATCH = 10
 MEMORY_SIZE = 2000
 WEIGHT_DECAY = 0.00005
 
-class LwF():
+class LwF(nn.Module):
     """Implementation of Learning without Forgetting.
     :param args: An argparse parsed arguments object.
     """
-
-    def __init__(self, args):
-        super().__init__()
+    
+    def __init__(self):
+        super(LwF,self).__init__()
+       
 
         self._device = 0
         self._opt_name = 'sgd'
