@@ -43,7 +43,7 @@ def main():
     perm_id = np.random.permutation(total_classes)
     all_classes = np.arange(total_classes)
     
-'''
+    '''
     #mix the classes indexes
     for i in range(len(all_classes)):
       all_classes[i] = perm_id[all_classes[i]]
@@ -66,7 +66,7 @@ def main():
     for cl, map_cl in class_map.items():
         map_reverse[map_cl] = int(cl)
     print (f"Map Reverse:{map_reverse}\n")
-'''
+    '''
 
     # Create Network
     net = LwF()
