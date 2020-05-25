@@ -126,7 +126,7 @@ class LwF(nn.Module):
         # first iteration
         if self._n_classes == 0:
             
-            self._classifier = nn.Linear(self.features_extractor.out_dim, n, bias=False)
+            self._classifier = nn.Linear(self.features_extractor.out_features, n, bias=False)
             torch.nn.init.kaiming_normal_(self._classifier.weight)
 
         else:
