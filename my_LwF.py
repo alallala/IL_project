@@ -19,7 +19,7 @@ class LwF(nn.Module):
     """
     
     def __init__(self):
-        super(LwF,self).__init__()
+        super(LwF,self).__init__(self)
        
 
         self._device = 0
