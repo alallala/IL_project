@@ -4,7 +4,6 @@ from torch import nn
 from torch.nn import functional as F
 from tqdm import trange
 import utils
-from inclearn.models.base import IncrementalLearner
 from resnet import resnet32
 
 DEVICE = 'cuda'
@@ -14,7 +13,7 @@ CLASSES_BATCH = 10
 MEMORY_SIZE = 2000
 WEIGHT_DECAY = 0.00005
 
-class LwF(IncrementalLearner):
+class LwF():
     """Implementation of Learning without Forgetting.
     :param args: An argparse parsed arguments object.
     """
