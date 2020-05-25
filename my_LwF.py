@@ -124,7 +124,7 @@ class LwF(nn.Module):
 
         # first iteration
         if self._n_classes == 0:
-            self._features_extractor = factory.get_resnet(convnet, nf=64, zero_init_residual=True)
+            self._features_extractor = resnet32(num_classes=2048)
             self._classifier = nn.Linear(self._features_extractor.out_dim, n, bias=False)
             torch.nn.init.kaiming_normal_(self._classifier.weight)
 
