@@ -69,7 +69,7 @@ def main():
     '''
 
     # Create Network
-    net = LwF(self)
+    net = LwF()
  
       
     #iterating until the net knows total_classes with 10 by 10 steps 
