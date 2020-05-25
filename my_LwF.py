@@ -19,9 +19,7 @@ class LwF(nn.Module):
     """
     
     def __init__(self):
-        super(LwF,self).__init__(self)
-       
-
+      
         self._device = 0
         self._opt_name = 'sgd'
         self._lr =LR
